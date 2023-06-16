@@ -1,8 +1,9 @@
 package main
 
 import (
-	"encoding/base64"
+	"mime/multipart"
 	"net/http"
+	"os"
 
 	"github.com/gin-gonic/gin"
 )
@@ -19,14 +20,14 @@ func init() {
 	})
 
 	router.GET("/printers", func(ctx *gin.Context) {
-		ctx.JSON(200, printers)
+		ctx.JSON(200, getPrinters())
 	})
 
 	router.POST("/print", func(ctx *gin.Context) {
 
 		data := &struct {
-			Printer string `json:"printer"`
-			Data    string `json:"data"`
+			Printer string                `form:"printer" binding:"required"`
+			File    *multipart.FileHeader `form:"file" binding:"required"`
 		}{}
 
 		err := ctx.Bind(data)
@@ -37,32 +38,32 @@ func init() {
 			return
 		}
 
-		if printer, ok := printers[data.Printer]; ok {
-			//decode base64
-			payload, err := base64.StdEncoding.DecodeString(data.Data)
-			if err != nil {
-				ctx.JSON(http.StatusBadRequest, gin.H{
-					"error":    true,
-					"messages": "Invalid data",
-				})
-				return
-			}
+		currentDirectory, _ := os.Getwd()
+		printJobDirectory := currentDirectory + "/print_jobs"
+		if _, err := os.Stat(printJobDirectory); os.IsNotExist(err) {
+			os.Mkdir(printJobDirectory, 0755)
+		}
 
-			printer.Pool.AddJob(&PrintJob{
-				Printer: data.Printer,
-				Data:    payload,
+		temporaryFile := printJobDirectory + "/" + data.File.Filename
+		err = ctx.SaveUploadedFile(data.File, temporaryFile)
+		if err != nil {
+			ctx.JSON(http.StatusInternalServerError, gin.H{
+				"message": "Internal Server Error",
 			})
+			return
+		}
 
+		err = Print(data.File.Filename, data.Printer)
+		if err == nil {
 			ctx.JSON(200, gin.H{
 				"message": "OK",
 			})
-
 			return
 		}
 
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"error":    true,
-			"messages": "Printer not found",
+			"messages": err.Error(),
 		})
 	})
 }
