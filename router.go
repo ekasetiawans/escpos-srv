@@ -37,7 +37,7 @@ func init() {
 			return
 		}
 
-		if printer, ok := printers[data.Printer]; !ok {
+		if printer, ok := printers[data.Printer]; ok {
 			//decode base64
 			payload, err := base64.StdEncoding.DecodeString(data.Data)
 			if err != nil {
