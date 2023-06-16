@@ -1,12 +1,8 @@
 module github.com/ekasetiawans/escpos-srv
 
-go 1.19
+go 1.18
 
-require (
-	github.com/adrianfalleiro/go-cups v0.0.0-20171102080816-9a4351eede21
-	github.com/gin-gonic/gin v1.9.1
-	github.com/knq/escpos v0.0.0-20201012084129-81d0344e35fa
-)
+require github.com/gin-gonic/gin v1.9.1
 
 require (
 	github.com/bytedance/sonic v1.9.1 // indirect

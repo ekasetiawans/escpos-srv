@@ -1,5 +1,3 @@
-github.com/adrianfalleiro/go-cups v0.0.0-20171102080816-9a4351eede21 h1:/6VcM91HKzUs2jGzXIB6yZgId/xqBUWYOjrFFdzbh4g=
-github.com/adrianfalleiro/go-cups v0.0.0-20171102080816-9a4351eede21/go.mod h1:k8UPbIGMtcdNOckvZBG9j2Gwkc8pFiVDBkZH51Qisy4=
 github.com/bytedance/sonic v1.5.0/go.mod h1:ED5hyg4y6t3/9Ku1R6dU/4KyJ48DZ4jPhfY1O2AihPM=
 github.com/bytedance/sonic v1.9.1 h1:6iJ6NqdoxCDr6mbY8h18oSO+cShGSMRGCEo7F2h0x8s=
 github.com/bytedance/sonic v1.9.1/go.mod h1:i736AoUSYt75HyZLoJW9ERYxcy6eaN6h4BZXU064P/U=
@@ -33,8 +31,6 @@ github.com/json-iterator/go v1.1.12/go.mod h1:e30LSqwooZae/UwlEbR2852Gd8hjQvJoHm
 github.com/klauspost/cpuid/v2 v2.0.9/go.mod h1:FInQzS24/EEf25PyTYn52gqo7WaD8xa0213Md/qVLRg=
 github.com/klauspost/cpuid/v2 v2.2.4 h1:acbojRNwl3o09bUq+yDCtZFc1aiwaAAxtcn8YkZXnvk=
 github.com/klauspost/cpuid/v2 v2.2.4/go.mod h1:RVVoqg1df56z8g3pUjL/3lE5UfnlrJX8tyFgg4nqhuY=
-github.com/knq/escpos v0.0.0-20201012084129-81d0344e35fa h1:Gqf0Q4Wra8RDXSaHwNKHcEJY0osaSklMXi5EnLLpuhM=
-github.com/knq/escpos v0.0.0-20201012084129-81d0344e35fa/go.mod h1:WEAqQJjNLSktlp0XxBiiftFrcb0RHKo9g/2hCfpYoIo=
 github.com/leodido/go-urn v1.2.4 h1:XlAE/cm/ms7TE/VMVoduSpNBoyc2dOxHs5MZSwAN63Q=
 github.com/leodido/go-urn v1.2.4/go.mod h1:7ZrI8mTSeBSHl/UaRyKQW1qZeMgak41ANeCNaVckg+4=
 github.com/mattn/go-isatty v0.0.19 h1:JITubQf0MOLdlGRuRq+jtsDlekdYPia9ZFsB8h/APPA=
