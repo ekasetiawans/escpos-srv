@@ -4,6 +4,7 @@ import (
 	"mime/multipart"
 	"net/http"
 	"os"
+	"path/filepath"
 
 	"github.com/gin-gonic/gin"
 )
@@ -38,8 +39,9 @@ func init() {
 			return
 		}
 
-		currentDirectory, _ := os.Getwd()
-		printJobDirectory := currentDirectory + "/" + data.Printer + "/print_jobs"
+		executable, _ := os.Executable()
+		executableDirectory := filepath.Dir(executable)
+		printJobDirectory := executableDirectory + "/" + data.Printer + "/print_jobs"
 		if _, err := os.Stat(printJobDirectory); os.IsNotExist(err) {
 			os.Mkdir(printJobDirectory, 0755)
 		}
