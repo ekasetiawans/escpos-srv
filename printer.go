@@ -13,7 +13,7 @@ func init() {
 
 type PrintJob struct {
 	Printer string
-	Data    string
+	Data    []byte
 }
 
 type Printer struct {
@@ -55,7 +55,7 @@ func (p *Printer) doAttach() {
 	}
 }
 
-func (p *Printer) Print(data string) error {
+func (p *Printer) Print(data []byte) error {
 	f, err := os.OpenFile(p.Address, os.O_RDWR, 0)
 	if err != nil {
 		return err
@@ -63,7 +63,7 @@ func (p *Printer) Print(data string) error {
 	defer f.Close()
 
 	pos := escpos.New(f)
-	_, err = pos.WriteRaw([]byte(data))
+	_, err = pos.WriteRaw(data)
 	if err != nil {
 		return err
 	}

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/base64"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -37,9 +38,19 @@ func init() {
 		}
 
 		if printer, ok := printers[data.Printer]; !ok {
+			//decode base64
+			payload, err := base64.StdEncoding.DecodeString(data.Data)
+			if err != nil {
+				ctx.JSON(http.StatusBadRequest, gin.H{
+					"error":    true,
+					"messages": "Invalid data",
+				})
+				return
+			}
+
 			printer.Pool.AddJob(&PrintJob{
 				Printer: data.Printer,
-				Data:    data.Data,
+				Data:    payload,
 			})
 
 			ctx.JSON(200, gin.H{
