@@ -2,7 +2,7 @@ package main
 
 import (
 	"encoding/json"
-	"io/ioutil"
+	"os"
 )
 
 var (
@@ -10,7 +10,7 @@ var (
 )
 
 func init() {
-	b, err := ioutil.ReadFile("config.json")
+	b, err := os.ReadFile("config.json")
 	if err != nil {
 		panic(err)
 	}
