@@ -1,8 +1,15 @@
 package main
 
-import "os/exec"
+import (
+	"log"
+	"os/exec"
+)
 
 func Print(filename, printer string) error {
-	cmd := exec.Command("lpr", "-r", "-P", printer, filename)
-	return cmd.Run()
+	output, err := exec.Command("lpr", "-r", "-P", printer, filename).CombinedOutput()
+	if err != nil {
+		log.Println(output)
+	}
+
+	return err
 }

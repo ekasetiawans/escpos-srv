@@ -39,7 +39,7 @@ func init() {
 		}
 
 		currentDirectory, _ := os.Getwd()
-		printJobDirectory := currentDirectory + "/print_jobs"
+		printJobDirectory := currentDirectory + "/" + data.Printer + "/print_jobs"
 		if _, err := os.Stat(printJobDirectory); os.IsNotExist(err) {
 			os.Mkdir(printJobDirectory, 0755)
 		}
@@ -53,7 +53,7 @@ func init() {
 			return
 		}
 
-		err = Print(data.File.Filename, data.Printer)
+		err = Print(temporaryFile, data.Printer)
 		if err == nil {
 			ctx.JSON(200, gin.H{
 				"message": "OK",
