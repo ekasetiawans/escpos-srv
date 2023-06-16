@@ -4,13 +4,15 @@ import (
 	"sync"
 )
 
-var (
-	pool = &Pool{}
-)
-
 type Pool struct {
 	Jobs  []*PrintJob
 	mutex sync.Mutex
+}
+
+func NewPool() *Pool {
+	return &Pool{
+		Jobs: make([]*PrintJob, 0),
+	}
 }
 
 func (p *Pool) AddJob(job *PrintJob) {

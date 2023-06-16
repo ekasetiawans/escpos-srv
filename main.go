@@ -6,7 +6,7 @@ import (
 )
 
 var (
-	printers []*Printer
+	printers map[string]*Printer
 )
 
 func init() {
@@ -27,15 +27,15 @@ func init() {
 		panic(err)
 	}
 
-	printers = make([]*Printer, len(config.Printers))
-	for i, printer := range config.Printers {
-		printers[i] = NewPrinter(printer.Name, printer.Address)
+	printers = make(map[string]*Printer, len(config.Printers))
+	for _, printer := range config.Printers {
+		printers[printer.Address] = NewPrinter(printer.Name, printer.Address)
 	}
 }
 
 func main() {
 	for _, printer := range printers {
-		printer.Attach(pool)
+		printer.Attach()
 	}
 
 	panic(router.Run(":8989"))

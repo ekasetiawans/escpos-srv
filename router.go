@@ -24,7 +24,8 @@ func init() {
 	router.POST("/print", func(ctx *gin.Context) {
 
 		data := &struct {
-			Data string `json:"data"`
+			Printer string `json:"printer"`
+			Data    string `json:"data"`
 		}{}
 
 		err := ctx.Bind(data)
@@ -35,12 +36,22 @@ func init() {
 			return
 		}
 
-		pool.AddJob(&PrintJob{
-			Data: data.Data,
-		})
+		if printer, ok := printers[data.Printer]; !ok {
+			printer.Pool.AddJob(&PrintJob{
+				Printer: data.Printer,
+				Data:    data.Data,
+			})
 
-		ctx.JSON(200, gin.H{
-			"message": "OK",
+			ctx.JSON(200, gin.H{
+				"message": "OK",
+			})
+
+			return
+		}
+
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"error":    true,
+			"messages": "Printer not found",
 		})
 	})
 }

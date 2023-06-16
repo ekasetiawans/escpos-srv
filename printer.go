@@ -12,13 +12,15 @@ func init() {
 }
 
 type PrintJob struct {
-	Data string
+	Printer string
+	Data    string
 }
 
 type Printer struct {
 	Name       string `json:"name"`
 	Address    string `json:"address"`
 	isAttached bool
+	Pool       *Pool
 }
 
 func NewPrinter(name, address string) *Printer {
@@ -26,6 +28,7 @@ func NewPrinter(name, address string) *Printer {
 		Name:       name,
 		Address:    address,
 		isAttached: false,
+		Pool:       NewPool(),
 	}
 }
 
@@ -33,15 +36,15 @@ func (p *Printer) Detach() {
 	p.isAttached = false
 }
 
-func (p *Printer) Attach(pool *Pool) {
-	go p.doAttach(pool)
+func (p *Printer) Attach() {
+	go p.doAttach()
 }
 
-func (p *Printer) doAttach(pool *Pool) {
+func (p *Printer) doAttach() {
 	p.isAttached = true
 	// infinite loops
 	for p.isAttached {
-		job := pool.GetJob()
+		job := p.Pool.GetJob()
 		if job == nil {
 			time.Sleep(2 * time.Second)
 			continue
