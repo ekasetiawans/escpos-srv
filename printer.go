@@ -6,10 +6,8 @@ import (
 )
 
 func Print(filename, printer string) error {
-	output, err := exec.Command("lpr", "-r", "-P", printer, filename).CombinedOutput()
-	if err != nil {
-		log.Println(output)
-	}
+	output, err := exec.Command("lpr", "-r", "-P", printer, "-o", "portrait", "-o", "media=684x396", filename).CombinedOutput()
+	log.Println(output)
 
 	return err
 }
