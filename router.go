@@ -41,9 +41,9 @@ func init() {
 
 		executable, _ := os.Executable()
 		executableDirectory := filepath.Dir(executable)
-		printJobDirectory := executableDirectory + "/" + data.Printer + "/print_jobs"
+		printJobDirectory := executableDirectory + "/jobs/" + data.Printer
 		if _, err := os.Stat(printJobDirectory); os.IsNotExist(err) {
-			os.Mkdir(printJobDirectory, 0755)
+			os.Mkdir(printJobDirectory, 0777)
 		}
 
 		temporaryFile := printJobDirectory + "/" + data.File.Filename
